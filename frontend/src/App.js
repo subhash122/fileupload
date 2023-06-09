@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Badge from 'react-bootstrap/Badge';
-const apiURL = "http://localhost:8000";
+const apiURL = "https://fileupload01.up.railway.app";
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);

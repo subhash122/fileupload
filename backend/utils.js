@@ -11,7 +11,7 @@ exports.parseFile = upload.single('doc');
 //uploads file to google drive folder and returns metadata of file
 exports.uploadToDrive = async (file) => {
     const auth = new google.auth.GoogleAuth({
-        keyfile: './googleCredentails.json',
+        keyFile: './googleCredentials.json',
         scopes: ['https://www.googleapis.com/auth/drive'],
     });
     const service = google.drive({ version: 'v3', auth });
