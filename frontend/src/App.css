@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+}
+
+
+.form-control{
+  margin: auto;
+}
+.download-btn{
+  cursor: pointer;
+}
