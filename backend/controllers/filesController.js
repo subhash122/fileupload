@@ -1,6 +1,7 @@
-const filesModel = require('../models/filesModel.js');
+const filesDao = require('../dao/filesDao.js')
 const { uploadToDrive } = require('../utils.js')
 const axios = require('axios')
+const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
 
 class FilesController {
 
@@ -8,11 +9,14 @@ class FilesController {
         let file = req.file;
         try {
             if (!req.file) {
-                throw new Error("no file found.please provide the file")
+                return res.status(400).json({ error: 'no file found.please provide the file' });
+            }
+
+            if (!allowedTypes.includes(file.mimetype)) {
+                return res.status(400).json({ error: 'Invalid file type. please provide valid file' });
             }
             let fileId = await uploadToDrive(file);
-
-            await filesModel.saveFile(fileId, file.originalname);
+            await filesDao.saveFile(fileId, file.originalname);
             let downloadLink = `${req.protocol}://${req.get('host')}/file/${fileId}`
             res.status(200).json({
                 fileLink: downloadLink,
@@ -28,9 +32,9 @@ class FilesController {
 
         try {
             if (!fileId) {
-                throw new Error("Please provide the proper file path.");
+                return res.status(400).json({ error: 'Please provide the proper file path.' });
             }
-            const { fileLink, fileName } = await filesModel.fetchFile(fileId);
+            const { fileLink, fileName } = await filesDao.fetchFile(fileId);
             const response = await axios.get(fileLink, {
                 responseType: 'stream',
             });

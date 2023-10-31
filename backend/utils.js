@@ -3,7 +3,9 @@ const multer = require("multer");
 const { PassThrough } = require('stream')
 const keyfile= require('./googleCredentials.json');
 const upload = multer({
-    storage: multer.memoryStorage()
+    storage: multer.memoryStorage(),
+    // limiting the max file size of uploaded file
+    limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE) }
 });
 
 exports.parseFile = upload.single('doc');

@@ -11,7 +11,8 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/file/:id', FilesController.getFile)
-app.post('/file', parseFile ,FilesController.uploadFile)
+app.post('/file', parseFile, FilesController.uploadFile)
+
 
 
 app.listen(port, () => {
